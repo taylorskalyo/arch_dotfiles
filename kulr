@@ -1,0 +1,58 @@
+#!/bin/bash
+
+XDG_CONFIG_HOME="${XDG_CONFIG_HOME-${HOME%/}/.config}"
+
+backup_suffix=""
+
+recolor() {
+  local file="$1"
+  local begin_block=false
+  local end_block=false
+  while read line && ! $end_block; do
+    if [[ $begin_block && "${line}" =~ ^[^s]*(s.*/.*/.*/) ]]; then
+      local sed_expr="$(echo "${BASH_REMATCH[1]}" | envsubst)"
+      sed -i"${backup_suffix}" "${sed_expr}" "${file}"
+    elif [[ "${line}" =~ ^.*"kulr begin".*$ ]]; then
+      local begin_block=true
+    elif [[ "${line}" =~ ^.*"kulr end".*$ ]]; then
+      local end_block=true
+    fi
+  done < "${file}"
+}
+
+main() {
+  OPTIND=1
+  while getopts "hb" opt; do
+    case "${opt}" in
+      h)
+        show_help
+        exit 0
+        ;;
+      \?)
+        echo "Invalid option -${OPTARG}"
+        show_help
+        exit 0
+        ;;
+      b)  backup_suffix=".bak"
+        ;;
+    esac
+  done
+
+  shift $((OPTIND-1))
+
+  [[ "$1" == "--" ]] && shift
+
+  if [[ "$#" -le 0 ]]; then
+    echo "You must specify at least one config file"
+    show_help
+    exit 1
+  else
+    local kulr_config="${XDG_CONFIG_HOME%/}/kulr/kulrrc"
+    [[ -f "${kulr_config}" ]] && source "${kulr_config}"
+    for config_path in "$@"; do
+      recolor "${config_path}"
+    done
+  fi
+}
+
+main "$@"
