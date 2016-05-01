@@ -1,9 +1,9 @@
 # -----------------
 # External Resources
 # ------------------------------------------------------------------------------
-RESOURCES=("${HOME%/}/.env" "${HOME%/}/.aliases" "${HOME%/}/.functions" "${HOME%/}/.private")
+RESOURCES=("env" "aliases" "functions" "private")
 for FILE in "${RESOURCES[@]}"; do
-  [[ -f "${FILE}" ]] && source "${FILE}"
+  [[ -f "${HOME%/}/.${FILE}" ]] && source "${HOME%/}/.${FILE}"
 done
 
 # -----------------
