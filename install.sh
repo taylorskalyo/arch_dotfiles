@@ -10,6 +10,8 @@
 #   - tool that updates multilpe configs?
 #   - source a single color scheme in multiple configs?
 # - color output to highlight important messages
+# - give each "module" it's own directory and put setup script there
+# - remove or separate out install commands from config setup
 
 XDG_CONFIG_HOME="${XDG_CONFIG_HOME-${HOME%/}/.config}"
 
@@ -119,7 +121,7 @@ setup_neovim() {
   install_config "${XDG_CONFIG_HOME%/}/nvim/init.vim"
   install_config "${XDG_CONFIG_HOME%/}/nvim/colors/tomorrow-night.vim"
 
-  plug_path="${XDG_CONFIG_HOME%/}/nvim/autoload/plug.vim"
+  local plug_path="${XDG_CONFIG_HOME%/}/nvim/autoload/plug.vim"
   curl -fLo "${plug_path}" --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   # There seems to be a bug in neovim that prevents calling PlugInstall from 
   # the command line. For now, just call it manually from within neovim.
@@ -158,7 +160,7 @@ show_help() {
 
 main() {
   OPTIND=1
-  while getopts "h?m:d:b:a" opt; do
+  while getopts "hm:d:b:a" opt; do
     case "${opt}" in
       h)
         show_help
@@ -201,10 +203,8 @@ main() {
     show_help
     exit 1
   else
-    while [[ -n "$1" && $(declare -Ff "setup_$1") ]]; do
-      # Install the specified module
-      eval "setup_$1"
-      shift
+    for arg in "$@"; do
+      [[ $(declare -Ff "setup_${arg}") ]] && eval "setup_${arg}"
     done
   fi
 }
