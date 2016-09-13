@@ -1,0 +1,72 @@
+#!/bin/bash
+
+AUDIO_TOGGLE="${HOME}/tmp/.toggle-audio"
+HEADPHONE="Headphone"
+STEREO="IEC958"
+
+show_help() {
+cat << EOF
+Usage: toggle-audio [option]
+
+Options:
+  -o    toggle output channel
+  -m    mute
+EOF
+}
+
+get_out() {
+  if [[ -r "${AUDIO_TOGGLE}" ]]; then
+    cat "${AUDIO_TOGGLE}"
+  else
+    # Default to headphone
+    "${HEADPHONE}"
+  fi
+}
+
+toggle_out() {
+  if [[ $(get_out) == "${HEADPHONE}" ]]; then
+    amixer -q set "${HEADPHONE}" off
+    amixer -q set "${STEREO}" on
+    printf "%s" "${STEREO}" > "${AUDIO_TOGGLE}"
+  else
+    amixer -q set "${HEADPHONE}" on
+    amixer -q set "${STEREO}" off
+    printf "%s" "${HEADPHONE}" > "${AUDIO_TOGGLE}"
+  fi
+}
+
+toggle_mute() {
+  amixer -q set "$(get_out)" toggle
+}
+
+main() {
+  OPTIND=1
+  while getopts "omh" opt; do
+    case "${opt}" in
+      o)
+        toggle_out
+        exit 0
+        ;;
+      m)
+        toggle_mute
+        exit 0
+        ;;
+      h)
+        show_help
+        exit 0
+        ;;
+      \?)
+        echo "Invalid option -${OPTARG}"
+        show_help
+        exit 0
+        ;;
+    esac
+  done
+  shift $((OPTIND-1))
+  [[ "$1" == "--" ]] && shift
+
+  # Toggle output if no options are specified
+  toggle_out
+}
+
+main "$@"

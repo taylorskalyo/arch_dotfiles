@@ -1,7 +1,11 @@
 " -----------------
 " Plugins and External Utilities
-" ------------------------------------------------------------- {{{
+" -------------------------------------------------------------
 " Vim-plug
+if empty(glob('~/.config/nvim/autoload/plug.vim'))
+  silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+endif
+
 call plug#begin()
 Plug 'kien/ctrlp.vim'
 Plug 'rking/ag.vim'
@@ -9,6 +13,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic'
 Plug 'majutsushi/tagbar'
+Plug 'rust-lang/rust.vim'
 call plug#end()
 
 " Speed up CtrlP with ag
@@ -26,11 +31,10 @@ nnoremap <leader>t :TagbarToggle<CR>
 
 " Toggle NerdTree
 nnoremap <leader>n :NERDTreeToggle<CR>
-"  }}}
 
 " -----------------
 " Interface
-" ------------------------------------------------------------- {{{
+" -------------------------------------------------------------
 " Show line numbers
 set number
 
@@ -43,7 +47,7 @@ syntax enable
 " Colors
 set t_Co=256
 set background=dark
-silent! colorscheme tomorrow-night
+silent! colorscheme dotfiler
 
 " Indent settings
 set autoindent
@@ -71,16 +75,16 @@ hi TabLineFill ctermfg=0 ctermbg=7
 
 " Ruler
 set colorcolumn=80
+"call matchadd('ColorColumn', '\%81v', -1)
 
 " More natural splits
 set splitbelow
 set splitright
 set fillchars=vert:│
-"  }}}
 
 " -----------------
 " Miscelaneous
-" ------------------------------------------------------------- {{{
+" -------------------------------------------------------------
 " Unicode support
 set encoding=utf-8
 
@@ -114,12 +118,11 @@ set dir+=/tmp
 
 " Automatically read when file changes
 set autoread
-" }}}
 
 " -----------------
 " Functions and shortcuts
-" ------------------------------------------------------------- {{{
-" Move to nex/previous line with same indentation
+" -------------------------------------------------------------
+" Move to next/previous line with same indentation
 nnoremap [b :call search('^'. matchstr(getline('.'), '\(^\s*\)') .'\%<' . line('.') . 'l\S', 'be')<CR>
 nnoremap ]b :call search('^'. matchstr(getline('.'), '\(^\s*\)') .'\%>' . line('.') . 'l\S', 'e')<CR>
 
@@ -134,11 +137,10 @@ nnoremap <leader>sc :setlocal spell!<CR>
 
 " Jump between if, else, do, case, when, end, etc. in ruby code
 runtime macros/matchit.vim
-" }}}
 
 " -----------------
 " Numbered tabs
-" ------------------------------------------------------------- {{{
+" -------------------------------------------------------------
 set tabline=%!MyTabLine()
 function MyTabLine()
   let s = '' " complete tabline goes here
@@ -205,11 +207,10 @@ function MyTabLine()
   endif
   return s
 endfunction
-" }}}
 
 " -----------------
 " Statusline
-" ------------------------------------------------------------- {{{
+" -------------------------------------------------------------
 " Statusline colors
 hi User1 ctermfg=9  " Red
 hi User2 ctermfg=10 " Green
@@ -272,4 +273,3 @@ set statusline+=%6*
 set statusline+=\ %P          " Percentage through file
 set statusline+=%2*
 set statusline+=\ %-6(%l:%c%) " Line:Col
-" }}}

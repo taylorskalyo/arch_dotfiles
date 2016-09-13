@@ -1,0 +1,36 @@
+#!/bin/bash
+
+main() {
+
+  local qutedir tempdir file ddgparams
+  qutedir="${XDG_CONFIG_HOME:-${HOME}/.config}/qutebrowser"
+  tempdir=$(mktemp -d)
+
+  # Copy current config files to temporary config directory
+  mkdir -p "${tempdir}/config"
+  for file in "qutebrowser.conf" "keys.conf" "styles.css"; do
+    cp "${qutedir}/${file}" "${tempdir}/config/"
+  done
+
+  # Start qutebrowser
+  # - open a separate window and don't restore anything
+  # - store data in tempdir (it will be removed later)
+  # - don't save history or session
+  # - change appearance, so we know it's a private session
+  ddgparams="kae=d&k1=-1"
+  qutebrowser \
+    --target=window \
+    --override-restore \
+    --basedir="${tempdir}" \
+    --set general private-browsing true \
+    --set general save-session false \
+    --set general startpage "file://${qutedir}/private.html" \
+    --set general default-page "https://duckduckgo.com?${ddgparams}" \
+    --set colors statusbar.bg "\${tabs.bg.selected.odd}" \
+    "$@"
+
+  # Cleanup
+  rm -rf "${tempdir}"
+}
+
+main "$@"

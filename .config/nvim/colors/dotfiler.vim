@@ -1,44 +1,26 @@
 " Modified from the theme "Tomorrow Night"
-"
-" Hex colour conversion functions borrowed from the theme "Desert256"
 
-" Settings for programatically changing colors using kulr script
-"
-" kulr begin
-" s/\\(^[:space]*let s:foreground = \"\\).*\\(\"\\)/\\1$KULR_FG\\2/
-" s/\\(^[:space]*let s:background = \"\\).*\\(\"\\)/\\1$KULR_BG\\2/
-" s/\\(^[:space]*let s:selection = \"\\).*\\(\"\\)/\\1$KULR_SEL\\2/
-" s/\\(^[:space]*let s:line = \"\\).*\\(\"\\)/\\1$KULR_LINE\\2/
-" s/\\(^[:space]*let s:comment = \"\\).*\\(\"\\)/\\1$KULR_COM\\2/
-" s/\\(^[:space]*let s:color1 = \"\\).*\\(\"\\)/\\1$KULR_1\\2/
-" s/\\(^[:space]*let s:color2 = \"\\).*\\(\"\\)/\\1$KULR_2\\2/
-" s/\\(^[:space]*let s:color3 = \"\\).*\\(\"\\)/\\1$KULR_3\\2/
-" s/\\(^[:space]*let s:color4 = \"\\).*\\(\"\\)/\\1$KULR_4\\2/
-" s/\\(^[:space]*let s:color5 = \"\\).*\\(\"\\)/\\1$KULR_5\\2/
-" s/\\(^[:space]*let s:color6 = \"\\).*\\(\"\\)/\\1$KULR_6\\2/
-" s/\\(^[:space]*let s:color11 = \"\\).*\\(\"\\)/\\1$KULR_11\\2/
-" s/\\(^[:space]*let s:window = \"\\).*\\(\"\\)/\\1$KULR_WIN\\2/
-" kulr end
+" Hex colour conversion functions borrowed from the theme "Desert256"
 
 " Colors
 let s:foreground = "c5c8c6"
-let s:background = "303030"
-let s:selection = "585858"
-let s:line = "3a3a3a"
-let s:comment = "969896"
-let s:color1 = "cc6666"
-let s:color2 = "b5bd68"
-let s:color3 = "de935f"
-let s:color4 = "81a2be"
-let s:color5 = "b294bb"
-let s:color6 = "8abeb7"
-let s:color11 = "f0c674"
-let s:window = "5e5e5e"
+let s:background = "262626"
+let s:selection  = "585858"
+let s:line       = "343434"
+let s:comment    = "969896"
+let s:color1     = "cc6666"
+let s:color2     = "b5bd68"
+let s:color3     = "de935f"
+let s:color4     = "81a2be"
+let s:color5     = "b294bb"
+let s:color6     = "8abeb7"
+let s:color11    = "f0c674"
+let s:window     = "5e5e5e"
 
 hi clear
 syntax reset
 
-let g:colors_name = "Kulr"
+let g:colors_name = "dotfiler"
 
 if has("gui_running") || &t_Co == 88 || &t_Co == 256
   " Returns an approximate grey index for the given grey level
@@ -129,7 +111,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
       elseif a:n == 25
         return 231
       else
-        return 231 + a:n
+        return 232 + a:n
       endif
     endif
   endfun

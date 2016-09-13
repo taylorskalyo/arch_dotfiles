@@ -1,40 +1,28 @@
-# -----------------
-# External Resources
-# ------------------------------------------------------------------------------
-RESOURCES=("env" "aliases" "functions" "private")
-for FILE in "${RESOURCES[@]}"; do
-  [[ -f "${HOME%/}/.${FILE}" ]] && source "${HOME%/}/.${FILE}"
+# Source shared shell resources
+for file in ".aliases" ".functions"; do
+  [[ -r "${HOME}/${file}" ]] && source "${HOME}/${file}"
 done
+unset file
 
-# -----------------
 # History
-# ------------------------------------------------------------------------------
-export HISTSIZE=10000
-export HISTFILESIZE=${HISTSIZE}
-export HISTCONTROL=ignoreboth # do not add duplicates or commands starting with a space
-shopt -s histappend # append to history instead of overwriting
+HISTSIZE=1000
+HISTFILESIZE="${HISTSIZE}"
+HISTCONTROL=ignoreboth # do not add duplicates or commands starting with a space
+shopt -s histappend
+shopt -s cmdhist # consolidate multiline commands into a single entry in history
 
-# -----------------
-# Tab Completion
-# ------------------------------------------------------------------------------
+# Fix minor spelling mistakes
+shopt -s cdspell
+
+# Completion
 [[ -s /etc/bash_completion ]] && source /etc/bash_completion
-
 complete -cf sudo
+shopt -s hostcomplete   # attempt to autocomplete hostnames
 
-# -----------------
-# Options
-# ------------------------------------------------------------------------------
-shopt -s cdspell # fix minor spelling errors
-shopt -s checkwinsize # update window contents after resize
-shopt -s cmdhist # consolidate multiline commands in history
-shopt -s dotglob # include filenames starting with '.' in globs
-shopt -s expand_aliases # expand aliases
-shopt -s hostcomplete # attempt to autocomplete hostnames
-shopt -s nocaseglob # case insensitive globbing
+# Update window contents after resize
+shopt -s checkwinsize
 
-# -----------------
 # Prompt
-# ------------------------------------------------------------------------------
 PS1="\
 \[\e[1;92m\]\u \
 \[\e[1;94m\]\w \

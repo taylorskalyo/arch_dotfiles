@@ -1,0 +1,51 @@
+! -----------------
+! URxvt
+! -------------------------------------------------------------
+
+URxvt.scrollBar: false
+URxvt.font: xft:Inconsolata:pixelsize=12:antialias=false:hinting=none,xft:Deja Vu Sans:pixelsize=12:antialias=false:hinting=none
+
+! URxvt.resize-font.smaller: C-minus
+URxvt.resize-font.bigger: C-equal
+URxvt.resize-font.reset: C-0
+! URxvt.resize-font.show: C-question
+
+! Mouse scrolling in secondary screen
+URxvt.perl-ext-common: vtwheel,resize-font
+
+! -----------------
+! Colors
+! -------------------------------------------------------------
+
+*.foreground:    #c5c8c6
+*.background:    #262626
+*.selforeground: #b5bd68
+*.selbackground: #262626
+*.cursorColor:   #c5c8c6
+*.color0:        #303030
+*.color1:        #cc6666
+*.color2:        #b5bd68
+*.color3:        #de935f
+*.color4:        #81a2be
+*.color5:        #b294bb
+*.color6:        #8abeb7
+*.color7:        #c5c8c6
+*.color8:        #969896
+*.color9:        #cc6666
+*.color10:       #b5bd68
+*.color11:       #f0c674
+*.color12:       #81a2be
+*.color13:       #b294bb
+*.color14:       #8abeb7
+*.color15:       #ffffff
+
+! Colored man pages
+*.colorIT:       #cc6666
+*.colorBD:       #81a2be
+*.colorUL:       #b294bb
+
+! -----------------
+! Dmenu
+! -------------------------------------------------------------
+
+dmenu.font: xft:Inconsolata:pixelsize=10:antialias=false:hinting=none
