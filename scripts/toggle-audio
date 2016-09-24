@@ -27,11 +27,11 @@ toggle_out() {
   if [[ $(get_out) == "${HEADPHONE}" ]]; then
     amixer -q set "${HEADPHONE}" off
     amixer -q set "${STEREO}" on
-    printf "%s" "${STEREO}" > "${AUDIO_TOGGLE}"
+    echo "${STEREO}" > "${AUDIO_TOGGLE}"
   else
     amixer -q set "${HEADPHONE}" on
     amixer -q set "${STEREO}" off
-    printf "%s" "${HEADPHONE}" > "${AUDIO_TOGGLE}"
+    echo "${HEADPHONE}" > "${AUDIO_TOGGLE}"
   fi
 }
 
