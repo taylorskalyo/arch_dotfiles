@@ -5,13 +5,18 @@
 URxvt.scrollBar: false
 URxvt.font: xft:Inconsolata:pixelsize=12:antialias=false:hinting=none,xft:Deja Vu Sans:pixelsize=12:antialias=false:hinting=none
 
+URxvt.perl-ext-common: vtwheel,resize-font,url-select
+
+! Resize font size
 ! URxvt.resize-font.smaller: C-minus
 URxvt.resize-font.bigger: C-equal
 URxvt.resize-font.reset: C-0
 ! URxvt.resize-font.show: C-question
 
-! Mouse scrolling in secondary screen
-URxvt.perl-ext-common: vtwheel,resize-font
+! Make links clickable
+URxvt.keysym.M-u: perl:url-select:select_next
+URxvt.url-select.launcher: /usr/bin/xdg-open
+URxvt.url-select.underline: true
 
 ! -----------------
 ! Colors
