@@ -1,0 +1,45 @@
+#!/bin/bash
+
+show_help() {
+cat << EOF
+Usage: lockscreen [option]
+
+Options:
+  -s    suspend to RAM
+EOF
+}
+
+main() {
+  local suspend="false"
+
+  if [[ ! $(command -v i3lock) ]]; then
+    echo "This wrapper script relies on i3lock"
+    show_help
+    exit 0
+  fi
+
+  OPTIND=1
+  while getopts "sh" opt; do
+    case "${opt}" in
+      s)
+        suspend="true"
+        ;;
+      h)
+        show_help
+        exit 0
+        ;;
+      \?)
+        echo "Invalid option -${OPTARG}"
+        show_help
+        exit 0
+        ;;
+    esac
+  done
+  shift $((OPTIND-1))
+  [[ "$1" == "--" ]] && shift
+
+  i3lock -eui "${HOME}/pictures/lock.png"
+  [[ "${suspend}" == "true" ]] && systemctl suspend
+}
+
+main "$@"
