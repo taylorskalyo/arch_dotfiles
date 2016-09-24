@@ -1,0 +1,17 @@
+#!/usr/bin/bash
+
+main() {
+  local bld col
+  echo
+  for bld in '' '\e[1m'; do
+    for _ in $(seq 3); do
+      for col in '\e[3'{0..7}'m'; do
+        printf "  %b██████\e[0m" "${bld}${col}"
+      done
+      echo
+    done
+    echo
+  done
+}
+
+main "$@"
