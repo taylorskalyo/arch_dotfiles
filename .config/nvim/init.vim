@@ -3,24 +3,26 @@
 " -------------------------------------------------------------
 " Vim-plug
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
-  silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
+  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 endif
 
 call plug#begin()
 Plug 'kien/ctrlp.vim'
-Plug 'rking/ag.vim'
+Plug 'mileszs/ack.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic'
 Plug 'majutsushi/tagbar'
-Plug 'rust-lang/rust.vim'
 call plug#end()
 
-" Speed up CtrlP
+" Use rg/ag for searching
 if executable('rg')
   let g:ctrlp_user_command = 'rg "" --color=never --hidden --files %s'
+  let g:ackprg = 'rg --vimgrep'
 elseif executable('ag')
   let g:ctrlp_user_command = 'ag %s --nocolor --hidden -g ""'
+  let g:ackprg = 'ag --vimgrep'
 endif
 
 " Use the system clipboard if not using tmux
@@ -90,9 +92,9 @@ set encoding=utf-8
 set mouse=a
 
 " Enable SGR mouse reporting
-if has("mouse_sgr")
+if has('mouse_sgr')
   set ttymouse=sgr
-elseif !has("nvim")
+elseif !has('nvim')
   set ttymouse=xterm2
 endif
 
