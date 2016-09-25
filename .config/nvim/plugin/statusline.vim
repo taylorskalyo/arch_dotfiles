@@ -30,8 +30,8 @@ if has('statusline')
   " Statusline content
   set laststatus=2
   set statusline=%1*
-  set statusline+=%{Mode()}%*                              " Mode
-  set statusline+=%#StatusLine#
+  set statusline+=%{Mode()}                                " Mode
+  set statusline+=%*
   set statusline+=%=                                       " Separator
   set statusline+=%#Structure#
   set statusline+=\ %{&modified?'[+]\ ':''}%.40f           " Filename
