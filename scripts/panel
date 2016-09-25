@@ -1,0 +1,191 @@
+#!/bin/bash
+
+#set -x
+XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-${HOME}/.config}"
+CONFIG_DIR="${XDG_CONFIG_HOME}/panel"
+PANEL_CONF="${CONFIG_DIR}/panelrc"
+PANEL_FIFO="${CONFIG_DIR}/panel.fifo"
+PANEL_NAME="bspwm-panel"
+
+PANEL_HEIGHT="${PANEL_HEIGHT:-20}"
+NUM_MON="$(bspc query -M | wc -l)"
+ORIG_TOP_PAD="$(bspc config -m focused top_padding)"
+
+start_broadcasters() {
+  # If broadcasters start in rapid succession, lemonbar will interpret the
+  # broadcasts as multiline input but only read the first line (see
+  # https://github.com/LemonBoy/bar/issues/107#issuecomment-77442641). To
+  # mitigate this, add a short delay between starting broadcasters.
+  bspc subscribe report > "$PANEL_FIFO" &
+  sleep 0.05
+  clock_broadcaster > "$PANEL_FIFO" &
+}
+
+clock_broadcaster() {
+  while true; do
+    date +"C%A, %b %d %H:%M"
+    sleep 10
+  done
+}
+
+interpret_broadcasts() {
+  local line wm clock
+  while read -r line < "${PANEL_FIFO}"; do
+    #echo "received: ${line}" >&2
+    case "${line}" in
+      W*) # window manager
+        wm="$(handle_bspwm "${line#?}")"
+        ;;
+      C*) # clock
+        clock="${line#?}"
+        ;;
+    esac
+    printf "%b\n" "%{l}${wm}%{c}${clock}%{r}"
+  done
+}
+
+handle_bspwm() {
+  # Parse bspwm broadcasts
+  local wm item name
+  local fgc="${COLOR_DEFAULT_FG:-fff}" bgc="${COLOR_DEFAULT_BG:-000}" icon="${EMPTY_CIRCLE:-o}"
+
+  IFS=':'
+  set -- $1
+  while [ $# -gt 0 ] ; do
+    item="$1"
+    name="${item#?}"
+    case "${item}" in
+      [mM]*)
+        [ "${NUM_MON}" -lt 2 ] && shift && continue
+        # Monitors
+        case "${item}" in
+          m*) # unfocused
+            icon="${EMPTY_CIRCLE:-x}"
+            fgc="${COLOR_MONITOR_FG:-aaa}"
+            bgc="${COLOR_MONITOR_BG:-000}"
+            ;;
+          M*) # focused
+            icon="${FILLED_CIRCLE:-x}"
+            fgc="${COLOR_FOCUSED_MONITOR_FG:-fff}"
+            bgc="${COLOR_FOCUSED_MONITOR_BG:-000}"
+            ;;
+        esac
+        wm="${wm}%{F#${fgc}}%{B#${bgc}}%{A:bspc monitor -f ${name}:} ${icon:-$name} %{A}%{B-}%{F-}"
+        ;;
+      [fFoOuU]*)
+        # Desktops
+        case "${item}" in
+          f*) # free
+            icon="${EMPTY_CIRCLE:-x}"
+            fgc="${COLOR_FREE_FG:-aaa}"
+            bgc="${COLOR_FREE_BG:-000}"
+            ;;
+          F*) # focused free
+            icon="${EMPTY_CIRCLE:-x}"
+            fgc="${COLOR_FOCUSED_FREE_FG:-0f0}"
+            bgc="${COLOR_FOCUSED_FREE_BG:-000}"
+            ;;
+          o*) # occupied
+            icon="${FILLED_CIRCLE:-x}"
+            fgc="${COLOR_OCCUPIED_FG:-aaa}"
+            bgc="${COLOR_OCCUPIED_BG:-000}"
+            ;;
+          O*) # focused occupied
+            icon="${FILLED_CIRCLE:-x}"
+            fgc="${COLOR_FOCUSED_OCCUPIED_FG:-0f0}"
+            bgc="${COLOR_FOCUSED_OCCUPIED_BG:-000}"
+            ;;
+          u*) # urgent
+            icon="${EMPTY_CIRCLE:-x}"
+            fgc="${COLOR_URGENT_FG:-f00}"
+            bgc="${COLOR_URGENT_BG:-000}"
+            ;;
+          U*) # focused urgent
+            icon="${FILLED_CIRCLE:-x}"
+            fgc="${COLOR_FOCUSED_URGENT_FG:-f00}"
+            bgc="${COLOR_FOCUSED_URGENT_BG:-000}"
+            ;;
+        esac
+        wm="${wm}%{F#${fgc}}%{B#${bgc}}%{A:bspc desktop -f ${name}:} ${icon:-$name} %{A}%{B-}%{F-}"
+        ;;
+      [LTG]*)
+        # Layout, state and flags
+        #wm="${wm}%{F#${COLOR_STATE_FG}}%{B#${COLOR_STATE_BG}} ${name} %{B-}%{F-}"
+        ;;
+    esac
+    shift
+  done
+  echo "%{T2}${wm}%{T-}"
+}
+
+set_z_index() {
+  local wid tries_left
+  wid=$(xdo id -a "${PANEL_NAME}")
+  tries_left=20
+  while [[ -z "${wid}" && "${tries_left}" -gt 0 ]] ; do
+    sleep 0.05
+    wid=$(xdo id -a "${PANEL_NAME}")
+    tries_left=$((tries_left - 1))
+  done
+  [ -n "${wid}" ] && xdo above -t "$(xdo id -N Bspwm -n root | sort | head -n 1)" "${wid}"
+}
+
+cleanup() {
+  # Reset bspwm padding
+  bspc config top_padding "${ORIG_TOP_PAD}"
+
+  # Remove fifo
+  [ -e "${PANEL_FIFO}" ] && rm "${PANEL_FIFO}"
+
+  # Reset trap
+  trap - TERM
+
+  # Kill other processes in our group
+  kill 0
+}
+
+init() {
+  # Init fifo
+  [ -e "${PANEL_FIFO}" ] && rm "${PANEL_FIFO}"
+  mkfifo "${PANEL_FIFO}"
+
+  # Source config
+  mkdir -p "${CONFIG_DIR}"
+  [[ -r "${PANEL_CONF}" ]] && source "${PANEL_CONF}"
+
+  # Set bspwm padding
+  bspc config top_padding "$(( ORIG_TOP_PAD + PANEL_HEIGHT ))"
+}
+
+main() {
+  if xdo id -a "${PANEL_NAME}" > /dev/null ; then
+    echo "The panel is already running." >&2
+    exit 1
+  fi
+
+  init
+
+  # Clean up on exit
+  trap cleanup INT TERM QUIT EXIT
+
+  # Bar will output commands of clicked areas; pipe these to shell
+  interpret_broadcasts | lemonbar \
+    -a 32 \
+    -n "${PANEL_NAME}" \
+    -g "x${PANEL_HEIGHT}" \
+    -f "${PANEL_FONT:-Monospace}" \
+    -f "${ICON_FONT:-Webdings}" \
+    -F "#${COLOR_DEFAULT_FG:-fff}" \
+    -B "#${COLOR_DEFAULT_BG:-000}" \
+    | sh &
+
+  # Start broadcasters in the background
+  start_broadcasters
+
+  # Move panel behind other windows
+  set_z_index
+
+  wait
+}
+
+main "$@"
