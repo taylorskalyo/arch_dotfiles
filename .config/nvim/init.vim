@@ -71,10 +71,6 @@ set foldlevelstart=10
 set foldnestmax=10
 set foldmethod=indent
 
-" Tabline
-hi TabLine ctermfg=0 ctermbg=7
-hi TabLineFill ctermfg=0 ctermbg=7
-
 " Ruler
 set colorcolumn=80
 "call matchadd('ColorColumn', '\%81v', -1)
