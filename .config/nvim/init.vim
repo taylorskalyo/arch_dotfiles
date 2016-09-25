@@ -16,9 +16,11 @@ Plug 'majutsushi/tagbar'
 Plug 'rust-lang/rust.vim'
 call plug#end()
 
-" Speed up CtrlP with ag
-if executable('ag')
-  let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden -g ""'
+" Speed up CtrlP
+if executable('rg')
+  let g:ctrlp_user_command = 'rg "" --color=never --hidden --files %s'
+elseif executable('ag')
+  let g:ctrlp_user_command = 'ag %s --nocolor --hidden -g ""'
 endif
 
 " Use the system clipboard if not using tmux
