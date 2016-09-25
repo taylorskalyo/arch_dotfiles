@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Wrapper around i3lock
+
 show_help() {
 cat << EOF
 Usage: lockscreen [option]

@@ -1,5 +1,7 @@
 #!/usr/bin/bash
 
+# Display the current terminal color scheme
+
 main() {
   local bld col
   echo

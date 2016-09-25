@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Wrapper around lemonbar
+# Displays the current time and window manager state
+
 #set -x
 XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-${HOME}/.config}"
 CONFIG_DIR="${XDG_CONFIG_HOME}/panel"

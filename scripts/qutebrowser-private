@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Wrapper around qutebrowser to launch a private browsing session
+
 main() {
 
   local qutedir tempdir file ddgparams
