@@ -9,6 +9,7 @@ if [ -r "${HOME}/pictures/bg.png" ]; then
 fi
 
 sxhkd &
+panel &
 compton --daemon
 
 bspc config border_width         2
