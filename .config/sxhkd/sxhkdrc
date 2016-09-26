@@ -19,8 +19,8 @@ super + Escape
 #
 
 # quit bspwm normally
-pkill -x panel; super + alt + Escape
-  bspc quit
+super + alt + Escape
+  pkill -x panel; bspc quit
 
 # close and kill
 super + {_,shift + }w
