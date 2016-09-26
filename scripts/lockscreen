@@ -11,11 +11,37 @@ Options:
 EOF
 }
 
+cleanup() {
+  # Reset monitor power saving (screen blanking)
+  xset dpms 0 0 0
+
+  # Resume dunst notifications
+  dunstctl resume
+}
+
+lock() {
+  # Clean up if killed
+  trap cleanup SIGHUP SIGINT SIGTERM
+
+  # Pause dunst notifications
+  dunstctl pause
+
+  # Blank screen after 20 seconds
+  xset +dpms dpms 20 20 20
+
+  # Lock the screen
+  i3lock \
+    --ignore-empty-password \
+    --nofork \
+    --no-unlock-indicator \
+    --image="${HOME}/pictures/lock.png"
+
+  cleanup
+}
+
 dunstctl() {
   # Don't do anything unless dunst and notify-send are present
-  if [[ ! ( $(command -v dunst) && $(command -v notify-send) ) ]]; then
-    return 1
-  fi
+  [[ ! ( $(command -v dunst) && $(command -v notify-send) ) ]] && return
 
   if [[ "$1" == "pause" ]]; then
     notify-send "DUNST_COMMAND_PAUSE"
@@ -53,11 +79,7 @@ main() {
   shift $((OPTIND-1))
   [[ "$1" == "--" ]] && shift
 
-  # Pause dunst notifications
-  dunstctl pause
-
-  # Lock screen
-  (i3lock -enui "${HOME}/pictures/lock.png" && dunstctl resume) &
+  lock &
 
   # Optionally suspend
   [[ "${suspend}" == "true" ]] && systemctl suspend
