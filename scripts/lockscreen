@@ -41,7 +41,7 @@ lock() {
 
 dunstctl() {
   # Don't do anything unless dunst and notify-send are present
-  [[ ! ( $(command -v dunst) && $(command -v notify-send) ) ]] && return
+  [[ $(command -v dunst) && $(command -v notify-send) ]] || return
 
   if [[ "$1" == "pause" ]]; then
     notify-send "DUNST_COMMAND_PAUSE"
