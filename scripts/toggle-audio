@@ -60,7 +60,7 @@ main() {
       \?)
         echo "Invalid option -${OPTARG}"
         show_help
-        exit 0
+        exit 1
         ;;
     esac
   done
