@@ -8,6 +8,7 @@ unset file
 HISTSIZE=1000
 HISTFILESIZE="${HISTSIZE}"
 HISTCONTROL=ignoreboth # do not add duplicates or commands starting with a space
+HISTTIMEFORMAT="%X " # add timestamps to history
 shopt -s histappend
 shopt -s cmdhist # consolidate multiline commands into a single entry in history
 
