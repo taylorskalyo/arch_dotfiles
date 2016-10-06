@@ -1,9 +1,11 @@
+! vim: ft=xdefaults
+
 ! -----------------
 ! URxvt
 ! -------------------------------------------------------------
 
 URxvt.scrollBar: false
-URxvt.font: xft:Inconsolata:pixelsize=12:antialias=false:hinting=none,xft:Deja Vu Sans:pixelsize=12:antialias=false:hinting=none
+URxvt.font: xft:Inconsolata:pixelsize=12,xft:Deja Vu Sans:pixelsize=12
 
 URxvt.perl-ext-common: vtwheel,resize-font,url-select
 
@@ -53,4 +55,4 @@ URxvt.url-select.underline: true
 ! Dmenu
 ! -------------------------------------------------------------
 
-dmenu.font: xft:Inconsolata:pixelsize=10:antialias=false:hinting=none
+dmenu.font: xft:Inconsolata:pixelsize=10
