@@ -22,12 +22,21 @@ start_broadcasters() {
   bspc subscribe report > "$PANEL_FIFO" &
   sleep 0.05
   clock_broadcaster > "$PANEL_FIFO" &
+  sleep 0.05
+  batt_broadcaster > "$PANEL_FIFO" &
 }
 
 clock_broadcaster() {
   while true; do
     date +"C%A, %b %d %H:%M"
     sleep 10
+  done
+}
+
+batt_broadcaster() {
+  while true; do
+    acpi -b
+    sleep 30
   done
 }
 
@@ -42,8 +51,11 @@ interpret_broadcasts() {
       C*) # clock
         clock="${line#?}"
         ;;
+      B*) # battery
+        batt="${line#Battery*: }"
+        ;;
     esac
-    printf "%b\n" "%{l}${wm}%{c}${clock}%{r}"
+    printf "%b\n" "%{l}${wm}%{c}${clock}%{r}${batt}"
   done
 }
 
