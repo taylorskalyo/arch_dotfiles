@@ -1,27 +1,35 @@
 " vim: ft=vim
-" Modified from the theme "Tomorrow Night"
 
 " Hex colour conversion functions borrowed from the theme "Desert256"
 
 " Colors
-let s:foreground = "c5c8c6"
-let s:background = "262626"
-let s:selection  = "585858"
-let s:line       = "343434"
-let s:comment    = "969896"
-let s:color3     = "de935f"
-let s:color9     = "cc6666"
-let s:color10    = "b5bd68"
-let s:color11    = "f0c674"
-let s:color12    = "81a2be"
-let s:color13    = "b294bb"
-let s:color14    = "8abeb7"
-let s:window     = "5e5e5e"
+let s:background = "#262626"
+let s:line       = "#343434"
+let s:selection  = "#585858"
+let s:window     = "#5e5e5e"
+let s:comment    = "#969896"
+let s:foreground = "#c5c8c6"
+let s:color0     = 0
+let s:color1     = 1
+let s:color2     = 2
+let s:color3     = 3
+let s:color4     = 4
+let s:color5     = 5
+let s:color6     = 6
+let s:color7     = 7
+let s:color8     = 8
+let s:color9     = 9
+let s:color10    = 10
+let s:color11    = 11
+let s:color12    = 12
+let s:color13    = 13
+let s:color14    = 14
+let s:color15    = 15
 
 hi clear
 syntax reset
 
-let g:colors_name = "dotfiler"
+let g:colors_name = "terminal"
 
 if has("gui_running") || &t_Co == 88 || &t_Co == 256
   " Returns an approximate grey index for the given grey level
@@ -209,22 +217,26 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
     endif
   endfun
 
-  " Returns the palette index to approximate the 'rrggbb' hex string
+  " Returns the palette index to approximate the '#rrggbb' hex string
   fun <SID>rgb(rgb)
-    let l:r = ("0x" . strpart(a:rgb, 0, 2)) + 0
-    let l:g = ("0x" . strpart(a:rgb, 2, 2)) + 0
-    let l:b = ("0x" . strpart(a:rgb, 4, 2)) + 0
+    let l:r = ("0x" . strpart(a:rgb, 1, 2)) + 0
+    let l:g = ("0x" . strpart(a:rgb, 3, 2)) + 0
+    let l:b = ("0x" . strpart(a:rgb, 5, 2)) + 0
 
     return <SID>colour(l:r, l:g, l:b)
   endfun
 
   " Sets the highlighting for the given group
   fun <SID>X(group, fg, bg, attr)
-    if a:fg != ""
-      exec "hi " . a:group . " guifg=#" . a:fg . " ctermfg=" . <SID>rgb(a:fg)
+    if a:fg =~ "^#"
+      exec "hi " . a:group . " guifg=" . a:fg . " ctermfg=" . <SID>rgb(a:fg)
+    elseif a:fg != ""
+      exec "hi " . a:group . " guifg=" . a:fg . " ctermfg=" . a:fg
     endif
-    if a:bg != ""
-      exec "hi " . a:group . " guibg=#" . a:bg . " ctermbg=" . <SID>rgb(a:bg)
+    if a:bg =~ "^#"
+      exec "hi " . a:group . " guibg=" . a:bg . " ctermbg=" . <SID>rgb(a:bg)
+    elseif a:bg != ""
+      exec "hi " . a:group . " guibg=" . a:bg . " ctermbg=" . a:bg
     endif
     if a:attr != ""
       exec "hi " . a:group . " gui=" . a:attr . " cterm=" . a:attr
@@ -239,7 +251,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
   call <SID>X("Search", s:background, s:color11, "")
   call <SID>X("TabLine", s:line, s:foreground, "reverse")
   call <SID>X("TabLineFill", s:line, s:foreground, "reverse")
-  call <SID>X("StatusLine", s:background, s:color11, "reverse")
+  call <SID>X("StatusLine", s:background, s:foreground, "reverse")
   call <SID>X("StatusLineNC", s:background, s:foreground, "reverse")
   call <SID>X("VertSplit", s:window, s:background, "none")
   call <SID>X("Visual", "", s:selection, "")

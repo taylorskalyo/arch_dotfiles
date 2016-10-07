@@ -53,7 +53,7 @@ syntax enable
 " Colors
 set t_Co=256
 set background=dark
-silent! colorscheme dotfiler
+silent! colorscheme terminal
 
 " Indent settings
 set autoindent
