@@ -3,8 +3,7 @@
 " -------------------------------------------------------------
 " Vim-plug
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
-  silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
-  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 endif
 
 call plug#begin()
@@ -36,6 +35,9 @@ nnoremap <leader>t :TagbarToggle<CR>
 " Toggle NerdTree
 nnoremap <leader>n :NERDTreeToggle<CR>
 
+" Ctrlp buffer selection
+nnoremap <C-b> :CtrlPBuffer<CR>
+
 " -----------------
 " Interface
 " -------------------------------------------------------------
@@ -61,14 +63,13 @@ set shiftwidth=2
 set tabstop=2
 set expandtab
 
-" Highlight current line (slows down scrolling)
+" Highlight current line (can slow down scrolling)
 "set cursorline
 
-" Show trailing spaces and tabs
+" Show tabs and trailing spaces
 set list listchars=tab:│\ ,trail:·
 
 " Folding
-set foldenable
 set foldlevelstart=10
 set foldnestmax=10
 set foldmethod=indent
@@ -83,26 +84,16 @@ set splitright
 set fillchars=vert:│
 
 " -----------------
-" Miscelaneous
+" Miscellaneous
 " -------------------------------------------------------------
 " Unicode support
 set encoding=utf-8
 
-" Enable mouse scrollwheel
+" Enable mouse scroll wheel
 set mouse=a
 
-" Enable SGR mouse reporting
-if has('mouse_sgr')
-  set ttymouse=sgr
-elseif !has('nvim')
-  set ttymouse=xterm2
-endif
-
-" Highlight searches
-set hlsearch
-
-" Check for file-specific vim settings
-set modelines=1
+" Do not highlight searches
+set nohlsearch
 
 " Search as characters are entered
 set incsearch
@@ -111,26 +102,25 @@ set incsearch
 set lazyredraw
 
 " Move temporary files to tmp directory
-set bdir-=.
-set bdir+=/tmp
+set backupdir-=.
+set backupdir+=/tmp
 set dir-=.
 set dir+=/tmp
 
-" Automatically read when file changes
+" Automatically read when file changes outside of vim
 set autoread
+
+" Allow modified buffers to be hidden
+set hidden
 
 " -----------------
 " Functions and shortcuts
 " -------------------------------------------------------------
-" Move to next/previous line with same indentation
-nnoremap [b :call search('^'. matchstr(getline('.'), '\(^\s*\)') .'\%<' . line('.') . 'l\S', 'be')<CR>
-nnoremap ]b :call search('^'. matchstr(getline('.'), '\(^\s*\)') .'\%>' . line('.') . 'l\S', 'e')<CR>
-
 " Move cursor by display line (rather than physical line)
 nnoremap k gk
 nnoremap j gj
 nnoremap <Up> g<Up>
 nnoremap <Down> g<Down>
 
-" Jump between if, else, do, case, when, end, etc. in ruby code
-runtime macros/matchit.vim
+" Toggle search highlighting
+nnoremap <leader>h :set hlsearch! hlsearch?<CR>
