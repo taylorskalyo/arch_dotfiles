@@ -29,12 +29,17 @@ lock() {
   # Blank screen after 20 seconds
   xset +dpms dpms 20 20 20
 
+  # Use image as background if it exists, else color
+  local image bgarg
+  image="${HOME}/pictures/lock.png"
+  [[ -e "${image}" ]] && bgarg="--image=${image}" || bgarg="--color=000000"
+
   # Lock the screen
   i3lock \
     --ignore-empty-password \
     --nofork \
     --no-unlock-indicator \
-    --image="${HOME}/pictures/lock.png"
+    "${bgarg}"
 
   cleanup
 }
