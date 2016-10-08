@@ -36,7 +36,7 @@ fi
 urxvtd -q -o -f
 
 # Auto mount usb drives
-udiskie &
+#udiskie &
 
 # Adjust screen tint based on time of day
 #redshift &
