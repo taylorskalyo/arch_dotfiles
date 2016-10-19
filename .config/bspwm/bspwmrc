@@ -4,9 +4,7 @@
 xsetroot -cursor_name left_ptr
 
 # Set background
-if [ -r "${HOME}/pictures/bg.png" ]; then
-  feh --bg-center "${HOME}/pictures/bg.png"
-fi
+[ -x "${HOME}/.fehbg" ] && "${HOME}/.fehbg" &
 
 sxhkd &
 panel &
