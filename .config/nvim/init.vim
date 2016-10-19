@@ -124,3 +124,7 @@ nnoremap <Down> g<Down>
 
 " Toggle search highlighting
 nnoremap <leader>h :set hlsearch! hlsearch?<CR>
+
+" Easier buffer switching (mimics tab switching)
+nnoremap gb :bn<CR>
+nnoremap gB :bp<CR>
