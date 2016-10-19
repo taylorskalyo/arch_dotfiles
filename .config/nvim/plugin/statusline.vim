@@ -1,26 +1,35 @@
 if has('statusline')
   " Statusline Mode
   hi User1 ctermfg=9
+  let g:last_mode=''
   function! Mode()
     let l:mode = mode()
 
+    if l:mode !=# g:last_mode
+      let g:last_mode = l:mode
+
+      if l:mode ==# 'n'
+        hi User9 ctermfg=9
+      elseif l:mode ==# "i"
+        hi User9 ctermfg=10
+      elseif l:mode ==# "R"
+        hi User9 ctermfg=11
+      elseif l:mode ==? "v" || l:mode ==# "^V"
+        hi User9 ctermfg=12
+      endif
+    endif
+
     if l:mode ==# "n"
-      hi User1 ctermfg=9
       return "  NORMAL "
     elseif l:mode ==# "i"
-      hi User1 ctermfg=10
       return "  INSERT "
     elseif l:mode ==# "R"
-      hi User1 ctermfg=11
       return "  REPLACE "
     elseif l:mode ==# "v"
-      hi User1 ctermfg=12
       return "  VISUAL "
     elseif l:mode ==# "V"
-      hi User1 ctermfg=12
       return "  V·LINE "
     elseif l:mode ==# "^V"
-      hi User1 ctermfg=12
       return "  V·BLOCK "
     else
       return l:mode
