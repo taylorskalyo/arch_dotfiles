@@ -54,7 +54,7 @@ dunstctl() {
 }
 
 main() {
-  local suspend="false"
+  local suspend_to_ram="false"
 
   if [[ ! $(command -v i3lock) ]]; then
     echo "This wrapper script relies on i3lock"
@@ -68,7 +68,7 @@ main() {
   while getopts "sh" opt; do
     case "${opt}" in
       s)
-        suspend="true"
+        suspend_to_ram="true"
         ;;
       h)
         show_help
@@ -87,7 +87,7 @@ main() {
   lock &
 
   # Optionally suspend
-  if [[ "${suspend}" == "true" ]]; then
+  if [[ "${suspend_to_ram}" == "true" ]]; then
     sleep 1 # ensure i3lock has time to start up
     systemctl suspend
   fi
