@@ -2,6 +2,10 @@
 
 # Wrapper around i3lock
 
+XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-${HOME}/.config}"
+CONFIG_DIR="${XDG_CONFIG_HOME}/lockscreen"
+CONFIG="${CONFIG_DIR}/lockrc"
+
 show_help() {
 cat << EOF
 Usage: lockscreen [option]
@@ -19,6 +23,10 @@ cleanup() {
   dunstctl resume
 }
 
+lock_cmd() {
+  i3lock
+}
+
 lock() {
   # Clean up if killed
   trap cleanup SIGHUP SIGINT SIGTERM
@@ -29,17 +37,7 @@ lock() {
   # Blank screen after 20 seconds
   xset +dpms dpms 20 20 20
 
-  # Use image as background if it exists, else color
-  local image bgarg
-  image="${HOME}/pictures/lock.png"
-  [[ -e "${image}" ]] && bgarg="--image=${image}" || bgarg="--color=000000"
-
-  # Lock the screen
-  i3lock \
-    --ignore-empty-password \
-    --nofork \
-    --no-unlock-indicator \
-    "${bgarg}"
+  lock_cmd
 
   cleanup
 }
@@ -63,6 +61,8 @@ main() {
     show_help
     exit 1
   fi
+
+  [[ -r "${CONFIG}" ]] && source "${CONFIG}"
 
   OPTIND=1
   while getopts "sh" opt; do

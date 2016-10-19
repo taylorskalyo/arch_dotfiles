@@ -1,0 +1,13 @@
+#!/bin/bash
+
+lock_cmd() {
+  # Use image as background if it exists, else color
+  local bgarg bgimg="${CONFIG_DIR}/lock.png"
+  [[ -e "${bgimg}" ]] && bgarg="--image=${bgimg}" || bgarg="--color=000000"
+
+  i3lock \
+    --ignore-empty-password \
+    --nofork \
+    --no-unlock-indicator \
+    "${bgarg}"
+}
