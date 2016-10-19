@@ -61,7 +61,7 @@ main() {
   if [[ ! $(command -v i3lock) ]]; then
     echo "This wrapper script relies on i3lock"
     show_help
-    exit 0
+    exit 1
   fi
 
   OPTIND=1
@@ -87,7 +87,10 @@ main() {
   lock &
 
   # Optionally suspend
-  [[ "${suspend}" == "true" ]] && systemctl suspend
+  if [[ "${suspend}" == "true" ]]; then
+    sleep 1 # ensure i3lock has time to start up
+    systemctl suspend
+  fi
 }
 
 main "$@"
