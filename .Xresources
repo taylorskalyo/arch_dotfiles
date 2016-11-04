@@ -1,6 +1,6 @@
 #include ".Xresources.d/colors"
-#define font01 xft:Meslo LG M:pixelsize=10
-#define font02 xft:Deja Vu Sans:pixelsize=11
+#define font01 xft:Meslo LG M:pixelsize=8
+#define font02 xft:Deja Vu Sans:pixelsize=10
 
 *.selforeground: base0B
 *.selbackground: base00
@@ -13,7 +13,7 @@ dmenu.font: font01
 ! -----------------
 ! Panel
 ! -------------------------------------------------------------
-panel.height: 13
+panel.height: 11
 panel.font: font01
 panel.icon-font: font02
 

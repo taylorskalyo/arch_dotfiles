@@ -1,0 +1,18 @@
+! vim:ft=xdefaults
+
+URxvt.scrollBar: false
+URxvt.font: xft:Inconsolata:pixelsize=10,xft:Deja Vu Sans:pixelsize=10
+URxvt.intensityStyles: false
+
+URxvt.perl-ext-common: vtwheel,resize-font,url-select
+
+! Resize font size on the fly
+! URxvt.resize-font.smaller: C-minus
+URxvt.resize-font.bigger: C-equal
+URxvt.resize-font.reset: C-0
+! URxvt.resize-font.show: C-question
+
+! Make links clickable
+URxvt.keysym.M-u: perl:url-select:select_next
+URxvt.url-select.launcher: /usr/bin/xdg-open
+URxvt.url-select.underline: true
