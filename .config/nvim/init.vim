@@ -7,12 +7,12 @@ if empty(glob('~/.config/nvim/autoload/plug.vim'))
 endif
 
 call plug#begin()
-Plug 'kien/ctrlp.vim'
-Plug 'mileszs/ack.vim'
+Plug 'kien/ctrlp.vim', { 'on':  ['CtrlP', 'CtrlPBuffer'] }
+Plug 'mileszs/ack.vim', { 'on':  'Ack' }
 Plug 'tpope/vim-fugitive'
-Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'scrooloose/syntastic'
-Plug 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar', { 'on':  'TagbarToggle' }
 call plug#end()
 
 " Use rg/ag for searching
