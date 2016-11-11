@@ -377,10 +377,10 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
   call <SID>X("htmlScriptTag", s:color9, "", "")
 
   " Diff Highlighting
-  call <SID>X("diffAdd", "", "4c4e39", "")
   call <SID>X("diffDelete", s:background, s:color9, "")
-  call <SID>X("diffChange", "", "2B5B77", "")
-  call <SID>X("diffText", s:line, s:color12, "")
+  call <SID>X("diffAdd", s:background, s:color10, "")
+  call <SID>X("diffChange", s:background, s:color11, "")
+  call <SID>X("diffText", s:background, s:color12, "")
 
   " ShowMarks Highlighting
   call <SID>X("ShowMarksHLl", s:color3, s:background, "none")
