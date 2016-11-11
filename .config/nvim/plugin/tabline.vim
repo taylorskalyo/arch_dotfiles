@@ -1,60 +1,75 @@
-set tabline=%!MyTabLine()
-function MyTabLine()
-  let s = ''
-  " Loop through each tab page
-  for t in range(tabpagenr('$'))
-    " Select the highlighting for the buffer names
-    if t + 1 == tabpagenr()
-      let s .= '%#TabLineSel#'
-    else
-      let s .= '%#TabLine#'
-    endif
-    let s .= ' '
-    " Set the tab page number (for mouse clicks)
-    let s .= '%' . (t + 1) . 'T'
-    " Set page number string
-    let s .= t + 1 . ' '
-    " Get buffer names and statuses
-    let n = ''  "temp string for buffer names while we loop and check buftype
-    let m = 0 " &modified counter
-    let bc = len(tabpagebuflist(t + 1))  "counter to avoid last ' '
-    " Loop through each buffer in a tab
-    for b in tabpagebuflist(t + 1)
-      " Buffer types: quickfix gets a [Q], help gets [H]{base fname}
-      " Others get 1dir/2dir/3dir/fname shortened to 1/2/3/fname
-      if getbufvar( b, "&buftype" ) == 'help'
-        let n .= '[H]' . fnamemodify( bufname(b), ':t:s/.txt$//' )
-      elseif getbufvar( b, "&buftype" ) == 'quickfix'
-        let n .= '[Q]'
-      else
-        let n .= pathshorten(bufname(b))
+" Modified version of JonSkanes' tabline
+" http://vim.wikia.com/wiki/Show_tab_number_in_your_tab_line
+
+if exists("+showtabline")
+  function MyTabLine()
+    let line = ''
+
+    " Loop through each tab
+    for tab_index in range(tabpagenr('$'))
+
+      " Highlight tab
+      let line .= tab_index + 1 == tabpagenr() ? '%#TabLineSel#' : '%#TabLine#'
+
+      let line .= ' '
+      let mod_count = 0
+      let tab_name = ''
+
+      " Set tab index for mouse clicks
+      let line .= '%' . (tab_index + 1) . 'T'
+
+      " Add tab index
+      let line .= (tab_index + 1) . ' '
+
+      " Add each buffer to tab name
+      let buf_count = len(tabpagebuflist(tab_index + 1))
+      for buf in tabpagebuflist(tab_index + 1)
+
+        " Count the number of modified buffers
+        if getbufvar( buf, "&modified" )
+          let mod_count += 1
+        endif
+
+        " Add buffer name/type:
+        if getbufvar( buf, "&buftype" ) == 'help'
+          " Help gets [H]{base fname}
+          let tab_name .= '[H]' . fnamemodify( bufname(buf), ':t:line/.txt$//' )
+        elseif getbufvar( buf, "&buftype" ) == 'quickfix'
+          " Quickfix gets a [Q]
+          let tab_name .= '[Q]'
+        else
+          " Others get 1dir/2dir/3dir/fname shortened to 1/2/3/fname
+          let tab_name .= pathshorten(bufname(buf))
+        endif
+
+        " Separate buffer names
+        if buf_count > 1
+          let tab_name .= ' '
+        endif
+        let buf_count -= 1
+      endfor
+
+      " Append '[+mod_count]' if a tab has modified buffers
+      if mod_count > 1
+        let line .= '[+' . mod_count . ']'
+      elseif mod_count > 0
+        let line .= '[+]'
       endif
-      " Check and ++ tab's &modified count
-      if getbufvar( b, "&modified" )
-        let m += 1
-      endif
-      if bc > 1
-        let n .= ' '
-      endif
-      let bc -= 1
+      let line .= ' '
+
+      " Append tab name to line
+      let line .= tab_name == '' ? '[No Name]' : tab_name
+      let line .= ' '
     endfor
-    " Add modified label [n+] where n pages in tab are modified
-    if m > 0
-      let s .= '+ '
+
+    " After the last tab, fill with TabLineFill and reset tab nr
+    let line .= '%#TabLineFill#%T'
+
+    " Right-align the 'X' (close) label
+    if tabpagenr('$') > 1
+      let line .= '%=%#TabLine#%999XX'
     endif
-    " Add buffer names
-    if n == ''
-      let s .= '[No Name]'
-    else
-      let s .= n
-    endif
-    let s .= ' '
-  endfor
-  " After the last tab fill with TabLineFill and reset tab page nr
-  let s .= '%#TabLineFill#%T'
-  " Right-align the label to close the current tab page
-  if tabpagenr('$') > 1
-    let s .= '%=%#TabLine#%999XX'
-  endif
-  return s
-endfunction
+    return line
+  endfunction
+  set tabline=%!MyTabLine()
+endif
