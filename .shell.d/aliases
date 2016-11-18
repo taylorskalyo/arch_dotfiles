@@ -1,3 +1,5 @@
+# vim:ft=sh
+
 # Prettier grep output
 alias grep='grep --color=tty --devices skip'
 

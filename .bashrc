@@ -1,8 +1,9 @@
 # Source shared shell resources
-for file in ".aliases" ".functions"; do
-  [[ -r "${HOME}/${file}" ]] && source "${HOME}/${file}"
-done
-unset file
+if [[ -d "${HOME}/.shell.d" ]]; then
+  for file in "${HOME}"/.shell.d/*; do
+    [[ -r "${file}" ]] && source "${file}"
+  done
+fi
 
 # History
 HISTSIZE=1000
