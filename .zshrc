@@ -28,11 +28,11 @@ autoload -U colors
 colors
 
 # Left prompt
-PROMPT="\
-%{$fg_bold[green]%}%n \
-%{$fg_bold[blue]%}%~ \
-%{$fg_bold[green]%}%# \
-%{$reset_color%}"
+PROMPT="%B\
+%{$fg[green]%}%n \
+%{$fg[blue]%}%~ \
+%{$fg[green]%}%# \
+%{$reset_color%}%b"
 autoload -U promptinit
 promptinit
 
