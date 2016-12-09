@@ -2,6 +2,7 @@
 
 URxvt.scrollBar: false
 URxvt.font: xft:Inconsolata:pixelsize=12,xft:Deja Vu Sans:pixelsize=12
+URxvt.intensityStyles: false
 
 URxvt.perl-ext-common: vtwheel,resize-font,url-select
 
