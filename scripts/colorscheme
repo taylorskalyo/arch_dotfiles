@@ -1,18 +1,17 @@
-#!/usr/bin/bash
+#!/usr/bin/env sh
 
 # Display the current terminal color scheme
 
 main() {
-  local bld col
-  echo
-  for bld in '' '\e[1m'; do
-    for _ in $(seq 3); do
-      for col in '\e[3'{0..7}'m'; do
-        printf "  %b██████\e[0m" "${bld}${col}"
+  for off in 0 8; do
+    for bld in '' '1;'; do
+      [ -z $bld ] && printf "norm " || printf "bold "
+      printf "%X-%X " "$((0 + off))" "$((7 + off))"
+      for col in $(seq 8); do
+        printf "\e[%s38;5;%dm████\e[0m" "${bld}" "$((col + off - 1))"
       done
       echo
     done
-    echo
   done
 }
 
