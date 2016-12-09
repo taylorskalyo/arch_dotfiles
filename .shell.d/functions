@@ -10,12 +10,12 @@ man() {
   #      se  stop standout
   #      us  start underline
   #      ue  stop underline
-  LESS_TERMCAP_mb=$'\e[5;91m' \
-  LESS_TERMCAP_md=$'\e[1;94m' \
+  LESS_TERMCAP_mb=$'\e[5;31m' \
+  LESS_TERMCAP_md=$'\e[1;34m' \
   LESS_TERMCAP_me=$'\e[0m' \
   LESS_TERMCAP_so=$'\e[38;5;244m' \
   LESS_TERMCAP_se=$'\e[0m' \
-  LESS_TERMCAP_us=$'\e[4;95m' \
+  LESS_TERMCAP_us=$'\e[4;35m' \
   LESS_TERMCAP_ue=$'\e[0m' \
   command man "$@"
 }
