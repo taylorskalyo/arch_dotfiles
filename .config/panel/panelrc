@@ -1,26 +1,37 @@
-PANEL_HEIGHT=13
-PANEL_FONT="Inconsolata-9"
-ICON_FONT="Deja Vu Sans-7"
+xrdb_query() {
+  for scope in {panel,"\\*"}; do
+    value=$(xrdb -query | grep -i "^${scope}\.$1:" | cut -f 2)
+    if [ ! -z "${value}" ]; then
+      echo "${value}"
+      return 0
+    fi
+  done
+  return 1
+}
+
+PANEL_HEIGHT=$(xrdb_query height)
+PANEL_FONT=$(xrdb_query font)
+ICON_FONT=$(xrdb_query icon-font)
 FILLED_CIRCLE="\u25cf"
 EMPTY_CIRCLE="\u25cb"
 
-COLOR_DEFAULT_FG=c5c8c6
-COLOR_DEFAULT_BG=262626
+COLOR_DEFAULT_FG=$(xrdb_query foreground)
+COLOR_DEFAULT_BG=$(xrdb_query background)
 
-COLOR_MONITOR_FG=81a2be
-COLOR_MONITOR_BG=262626
-COLOR_FOCUSED_MONITOR_FG=81a2be
-COLOR_FOCUSED_MONITOR_BG=262626
+COLOR_MONITOR_FG=$(xrdb_query color4)
+COLOR_MONITOR_BG=$(xrdb_query background)
+COLOR_FOCUSED_MONITOR_FG=$(xrdb_query color4)
+COLOR_FOCUSED_MONITOR_BG=$(xrdb_query background)
 
-COLOR_FREE_FG=5e5e5e
-COLOR_FREE_BG=262626
-COLOR_URGENT_FG=cc6666
-COLOR_URGENT_BG=262626
-COLOR_OCCUPIED_FG=5e5e5e
-COLOR_OCCUPIED_BG=262626
-COLOR_FOCUSED_FREE_FG=b5bd68
-COLOR_FOCUSED_FREE_BG=262626
-COLOR_FOCUSED_OCCUPIED_FG=b5bd68
-COLOR_FOCUSED_OCCUPIED_BG=262626
-COLOR_FOCUSED_URGENT_FG=cc6666
-COLOR_FOCUSED_URGENT_BG=262626
+COLOR_FREE_FG=$(xrdb_query color11)
+COLOR_FREE_BG=$(xrdb_query background)
+COLOR_URGENT_FG=$(xrdb_query color1)
+COLOR_URGENT_BG=$(xrdb_query background)
+COLOR_OCCUPIED_FG=$(xrdb_query color11)
+COLOR_OCCUPIED_BG=$(xrdb_query background)
+COLOR_FOCUSED_FREE_FG=$(xrdb_query color2)
+COLOR_FOCUSED_FREE_BG=$(xrdb_query background)
+COLOR_FOCUSED_OCCUPIED_FG=$(xrdb_query color2)
+COLOR_FOCUSED_OCCUPIED_BG=$(xrdb_query background)
+COLOR_FOCUSED_URGENT_FG=$(xrdb_query color1)
+COLOR_FOCUSED_URGENT_BG=$(xrdb_query background)

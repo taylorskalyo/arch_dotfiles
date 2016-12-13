@@ -1,5 +1,36 @@
 #include ".Xresources.d/colors"
-#include ".Xresources.d/urxvt"
 
-! Demnu
+! -----------------
+! Demenu
+! -------------------------------------------------------------
 dmenu.font: xft:Inconsolata:pixelsize=10
+
+! -----------------
+! Panel
+! -------------------------------------------------------------
+panel.height: 13
+panel.font: Inconsolata-9
+panel.icon-font: Deja Vu Sans-7
+
+! -----------------
+! URxvt
+! -------------------------------------------------------------
+urxvt.scrollBar: false
+urxvt.font: xft:Inconsolata:pixelsize=12,xft:Deja Vu Sans:pixelsize=12
+
+! Use bold font instead of high intensity colors
+urxvt.intensityStyles: false
+
+! Extensions
+urxvt.perl-ext-common: vtwheel,resize-font,url-select
+
+! Resize font size on the fly
+! urxvt.resize-font.smaller: C-minus
+urxvt.resize-font.bigger: C-equal
+urxvt.resize-font.reset: C-0
+! urxvt.resize-font.show: C-question
+
+! Make links clickable
+urxvt.keysym.M-u: perl:url-select:select_next
+urxvt.url-select.launcher: /usr/bin/xdg-open
+urxvt.url-select.underline: true

@@ -50,7 +50,7 @@ interpret_broadcasts() {
 handle_bspwm() {
   # Parse bspwm broadcasts
   local wm item name
-  local fgc="${COLOR_DEFAULT_FG:-fff}" bgc="${COLOR_DEFAULT_BG:-000}" icon="${EMPTY_CIRCLE:-o}"
+  local fgc="${COLOR_DEFAULT_FG:-#fff}" bgc="${COLOR_DEFAULT_BG:-#000}" icon="${EMPTY_CIRCLE:-o}"
 
   IFS=':'
   set -- $1
@@ -64,56 +64,56 @@ handle_bspwm() {
         case "${item}" in
           m*) # unfocused
             icon="${EMPTY_CIRCLE:-x}"
-            fgc="${COLOR_MONITOR_FG:-aaa}"
-            bgc="${COLOR_MONITOR_BG:-000}"
+            fgc="${COLOR_MONITOR_FG:-#aaa}"
+            bgc="${COLOR_MONITOR_BG:-#000}"
             ;;
           M*) # focused
             icon="${FILLED_CIRCLE:-x}"
-            fgc="${COLOR_FOCUSED_MONITOR_FG:-fff}"
-            bgc="${COLOR_FOCUSED_MONITOR_BG:-000}"
+            fgc="${COLOR_FOCUSED_MONITOR_FG:-#fff}"
+            bgc="${COLOR_FOCUSED_MONITOR_BG:-#000}"
             ;;
         esac
-        wm="${wm}%{F#${fgc}}%{B#${bgc}}%{A:bspc monitor -f ${name}:} ${icon:-$name} %{A}%{B-}%{F-}"
+        wm="${wm}%{F${fgc}}%{B${bgc}}%{A:bspc monitor -f ${name}:} ${icon:-$name} %{A}%{B-}%{F-}"
         ;;
       [fFoOuU]*)
         # Desktops
         case "${item}" in
           f*) # free
             icon="${EMPTY_CIRCLE:-x}"
-            fgc="${COLOR_FREE_FG:-aaa}"
-            bgc="${COLOR_FREE_BG:-000}"
+            fgc="${COLOR_FREE_FG:-#aaa}"
+            bgc="${COLOR_FREE_BG:-#000}"
             ;;
           F*) # focused free
             icon="${EMPTY_CIRCLE:-x}"
-            fgc="${COLOR_FOCUSED_FREE_FG:-0f0}"
-            bgc="${COLOR_FOCUSED_FREE_BG:-000}"
+            fgc="${COLOR_FOCUSED_FREE_FG:-#0f0}"
+            bgc="${COLOR_FOCUSED_FREE_BG:-#000}"
             ;;
           o*) # occupied
             icon="${FILLED_CIRCLE:-x}"
-            fgc="${COLOR_OCCUPIED_FG:-aaa}"
-            bgc="${COLOR_OCCUPIED_BG:-000}"
+            fgc="${COLOR_OCCUPIED_FG:-#aaa}"
+            bgc="${COLOR_OCCUPIED_BG:-#000}"
             ;;
           O*) # focused occupied
             icon="${FILLED_CIRCLE:-x}"
-            fgc="${COLOR_FOCUSED_OCCUPIED_FG:-0f0}"
-            bgc="${COLOR_FOCUSED_OCCUPIED_BG:-000}"
+            fgc="${COLOR_FOCUSED_OCCUPIED_FG:-#0f0}"
+            bgc="${COLOR_FOCUSED_OCCUPIED_BG:-#000}"
             ;;
           u*) # urgent
             icon="${EMPTY_CIRCLE:-x}"
-            fgc="${COLOR_URGENT_FG:-f00}"
-            bgc="${COLOR_URGENT_BG:-000}"
+            fgc="${COLOR_URGENT_FG:-#f00}"
+            bgc="${COLOR_URGENT_BG:-#000}"
             ;;
           U*) # focused urgent
             icon="${FILLED_CIRCLE:-x}"
-            fgc="${COLOR_FOCUSED_URGENT_FG:-f00}"
-            bgc="${COLOR_FOCUSED_URGENT_BG:-000}"
+            fgc="${COLOR_FOCUSED_URGENT_FG:-#f00}"
+            bgc="${COLOR_FOCUSED_URGENT_BG:-#000}"
             ;;
         esac
-        wm="${wm}%{F#${fgc}}%{B#${bgc}}%{A:bspc desktop -f ${name}:} ${icon:-$name} %{A}%{B-}%{F-}"
+        wm="${wm}%{F${fgc}}%{B${bgc}}%{A:bspc desktop -f ${name}:} ${icon:-$name} %{A}%{B-}%{F-}"
         ;;
       [LTG]*)
         # Layout, state and flags
-        #wm="${wm}%{F#${COLOR_STATE_FG}}%{B#${COLOR_STATE_BG}} ${name} %{B-}%{F-}"
+        #wm="${wm}%{F${COLOR_STATE_FG}}%{B${COLOR_STATE_BG}} ${name} %{B-}%{F-}"
         ;;
     esac
     shift
@@ -178,8 +178,8 @@ main() {
     -g "x${PANEL_HEIGHT}" \
     -f "${PANEL_FONT:-Monospace}" \
     -f "${ICON_FONT:-Webdings}" \
-    -F "#${COLOR_DEFAULT_FG:-fff}" \
-    -B "#${COLOR_DEFAULT_BG:-000}" \
+    -F "${COLOR_DEFAULT_FG:-#fff}" \
+    -B "${COLOR_DEFAULT_BG:-#000}" \
     | sh &
 
   # Start broadcasters in the background
