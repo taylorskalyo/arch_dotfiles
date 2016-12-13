@@ -12,9 +12,11 @@ super + space
 
 # reload configuration files
 super + Escape
-  pkill -USR1 -x sxhkd; \
-  pkill -USR1 -x compton; \
-  pkill -USR1 -x panel
+  xrdb "${HOME}/.Xresources" && term-apply-colors &; \
+  pkill -fx "bspc subscribe report"; \
+  pkill -USR1 -x sxhkd &; \
+  pkill -USR1 -x compton &; \
+  pkill -USR1 -x panel &
 
 #
 # bspwm hotkeys
