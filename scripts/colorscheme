@@ -2,17 +2,14 @@
 
 # Display the current terminal color scheme
 
-main() {
-  for off in 0 8; do
-    for bld in '' '1;'; do
-      [ -z $bld ] && printf "norm " || printf "bold "
-      printf "%X-%X " "$((0 + off))" "$((7 + off))"
-      for col in $(seq 8); do
-        printf "\e[%s38;5;%dm████\e[0m" "${bld}" "$((col + off - 1))"
-      done
-      echo
+for off in 0 8; do
+  for bld in 0 1; do
+    printf "\e[%dm" "${bld}"
+    [ $bld -eq 0 ] && printf "norm " || printf "bold "
+    printf "%X-%X " "$((0 + off))" "$((7 + off))"
+    for col in $(seq 8); do
+      printf "\e[38;5;%dm████\e[0m" "$((col + off - 1))"
     done
+    echo
   done
-}
-
-main "$@"
+done
