@@ -160,6 +160,11 @@ init() {
   bspc config top_padding "$(( ORIG_TOP_PAD + PANEL_HEIGHT ))"
 }
 
+reload() {
+  [[ -r "${PANEL_CONF}" ]] && source "${PANEL_CONF}"
+  main
+}
+
 main() {
   if xdo id -a "${PANEL_NAME}" > /dev/null ; then
     echo "The panel is already running." >&2
@@ -170,6 +175,9 @@ main() {
 
   # Clean up on exit
   trap cleanup INT TERM QUIT EXIT
+
+  # Reload config on USR1
+  trap reload USR1
 
   # Bar will output commands of clicked areas; pipe these to shell
   interpret_broadcasts | lemonbar \

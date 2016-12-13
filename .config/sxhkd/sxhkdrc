@@ -10,9 +10,11 @@ super + Return
 super + space
   dmenu_run
 
-# make sxhkd reload its configuration files:
+# reload configuration files
 super + Escape
-  pkill -USR1 -x sxhkd; pkill -USR1 -x compton
+  pkill -USR1 -x sxhkd; \
+  pkill -USR1 -x compton; \
+  pkill -USR1 -x panel
 
 #
 # bspwm hotkeys
