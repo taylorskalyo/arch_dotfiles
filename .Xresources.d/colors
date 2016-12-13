@@ -6,9 +6,9 @@
 #define base02 #585858
 #define base03 #969896
 #define base04 #b4b7b4
-#define base05 #ffffff
+#define base05 #c5c8c6
 #define base06 #e0e0e0
-#define base07 #c5c8c6
+#define base07 #ffffff
 #define base08 #cc6666
 #define base09 #de935f
 #define base0A #f0c674

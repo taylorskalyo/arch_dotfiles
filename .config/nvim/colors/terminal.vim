@@ -7,18 +7,18 @@ if &background == "dark"
   let s:base02 = "11"
   let s:base03 = "08"
   let s:base04 = "12"
-  let s:base05 = "15"
+  let s:base05 = "07"
   let s:base06 = "13"
-  let s:base07 = "07"
+  let s:base07 = "15"
 else
   let s:base07 = "00"
   let s:base06 = "10"
   let s:base05 = "11"
   let s:base04 = "08"
   let s:base03 = "12"
-  let s:base02 = "15"
+  let s:base02 = "07"
   let s:base01 = "13"
-  let s:base00 = "07"
+  let s:base00 = "15"
 endif
 
 " Colors
