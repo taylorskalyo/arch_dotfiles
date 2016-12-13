@@ -1,5 +1,8 @@
 #include ".Xresources.d/colors"
 
+*.selforeground: base0B
+*.selbackground: base00
+
 ! -----------------
 ! Demenu
 ! -------------------------------------------------------------
