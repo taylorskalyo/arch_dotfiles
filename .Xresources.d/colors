@@ -1,13 +1,13 @@
 ! Based on Base16 Tomorrow Night
 ! https://github.com/chriskempson/base16-vim/blob/master/colors/base16-tomorrow-night.vim
 
-#define base00 #262626
-#define base01 #343434
-#define base02 #585858
-#define base03 #969896
+#define base00 #232629
+#define base01 #313437
+#define base02 #55585b
+#define base03 #939899
 #define base04 #b4b7b4
-#define base05 #c5c8c6
-#define base06 #e0e0e0
+#define base05 #c2c8c9
+#define base06 #dde0e3
 #define base07 #ffffff
 #define base08 #cc6666
 #define base09 #de935f
