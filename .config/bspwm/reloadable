@@ -1,0 +1,35 @@
+#! /usr/bin/env bash
+
+# Used to load settings from .Xresources
+xrdb_query() {
+  for scope in {bspwm,"\\*"}; do
+    value=$(xrdb -query | grep -i "^${scope}\.$1:" | cut -f 2)
+    if [ ! -z "${value}" ]; then
+      echo "${value}"
+      return 0
+    fi
+  done
+  return 1
+}
+
+# Set default cursor to pointer
+xsetroot -cursor_name left_ptr
+
+# Background
+[ -x "${HOME}/.fehbg" ] && "${HOME}/.fehbg"
+
+# Gap, border, and split
+bspc config border_width         1
+bspc config window_gap           10
+bspc config split_ratio          0.50
+bspc config borderless_monocle   true
+bspc config gapless_monocle      true
+
+# Colors
+bspc config normal_border_color         "$(xrdb_query color10)"
+bspc config active_border_color         "$(xrdb_query color11)"
+bspc config focused_border_color        "$(xrdb_query color11)"
+bspc config presel_feedback_color       "$(xrdb_query color11)"
+
+# Monitors
+bspc monitor -d I II III IV V VI VII VIII IX X
