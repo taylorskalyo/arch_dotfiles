@@ -12,12 +12,11 @@ super + space
 
 # reload configuration files
 super + Escape
-  xrdb "$HOME/.Xresources" && term-apply-colors &; \
-  pkill -fx "bspc subscribe report"; \
+  (xrdb "$HOME/.Xresources"; term-apply-colors) &; \
+  (pkill -fx "bspc subscribe report"; pkill -USR1 -x panel) &; \
   pkill -USR1 -x sxhkd &; \
   pkill -USR1 -x compton &; \
-  pkill -USR1 -x panel &; \
-  "$XDG_CONFIG_HOME/bspwm/reloadable"
+  "$XDG_CONFIG_HOME/bspwm/reloadable" &
 
 #
 # bspwm hotkeys
