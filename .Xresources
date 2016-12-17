@@ -1,4 +1,6 @@
 #include ".Xresources.d/colors"
+#define font01 xft:Meslo LG M:pixelsize=10
+#define font02 xft:Deja Vu Sans:pixelsize=11
 
 *.selforeground: base0B
 *.selbackground: base00
@@ -6,20 +8,20 @@
 ! -----------------
 ! Demenu
 ! -------------------------------------------------------------
-dmenu.font: xft:Meslo LG M:pixelsize=10
+dmenu.font: font01
 
 ! -----------------
 ! Panel
 ! -------------------------------------------------------------
 panel.height: 13
-panel.font: xft:Meslo LG M:pixelsize=10
-panel.icon-font: xft:Deja Vu Sans:pixelsize=11
+panel.font: font01
+panel.icon-font: font02
 
 ! -----------------
 ! URxvt
 ! -------------------------------------------------------------
 urxvt.scrollBar: false
-urxvt.font: xft:Meslo LG M:pixelsize=10,xft:Deja Vu Sans:pixelsize=12
+urxvt.font: font01,font02
 
 ! Use bold font instead of high intensity colors
 urxvt.intensityStyles: false
