@@ -12,8 +12,8 @@ dmenu.font: xft:Meslo LG M:pixelsize=10
 ! Panel
 ! -------------------------------------------------------------
 panel.height: 13
-panel.font: Meslo LG M-7
-panel.icon-font: Deja Vu Sans-7
+panel.font: xft:Meslo LG M:pixelsize=10
+panel.icon-font: xft:Deja Vu Sans:pixelsize=11
 
 ! -----------------
 ! URxvt
