@@ -26,7 +26,7 @@ shopt -s checkwinsize
 
 # Prompt
 PS1="\[\e[1m\]\
-\[\e[92m\]\u \
-\[\e[94m\]\w \
-\[\e[92m\]\$ \
+\[\e[32m\]\u \
+\[\e[34m\]\w \
+\[\e[32m\]\$ \
 \[\e[m\]"
