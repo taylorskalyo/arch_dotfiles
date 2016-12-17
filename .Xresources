@@ -6,20 +6,20 @@
 ! -----------------
 ! Demenu
 ! -------------------------------------------------------------
-dmenu.font: xft:Inconsolata:pixelsize=10
+dmenu.font: xft:Meslo LG M:pixelsize=10
 
 ! -----------------
 ! Panel
 ! -------------------------------------------------------------
 panel.height: 13
-panel.font: Inconsolata-9
+panel.font: Meslo LG M-7
 panel.icon-font: Deja Vu Sans-7
 
 ! -----------------
 ! URxvt
 ! -------------------------------------------------------------
 urxvt.scrollBar: false
-urxvt.font: xft:Inconsolata:pixelsize=12,xft:Deja Vu Sans:pixelsize=12
+urxvt.font: xft:Meslo LG M:pixelsize=10,xft:Deja Vu Sans:pixelsize=12
 
 ! Use bold font instead of high intensity colors
 urxvt.intensityStyles: false
