@@ -13,14 +13,15 @@ Plug 'tpope/vim-fugitive'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'scrooloose/syntastic'
 Plug 'majutsushi/tagbar', { 'on':  'TagbarToggle' }
+Plug 'fatih/vim-go'
 call plug#end()
 
 " Use rg/ag for searching
 if executable('rg')
-  let g:ctrlp_user_command = 'rg "" --color=never --hidden --files %s'
+  let g:ctrlp_user_command = 'rg %s --color=never --no-ignore --glob "!.git/*" --hidden --files'
   let g:ackprg = 'rg --vimgrep'
 elseif executable('ag')
-  let g:ctrlp_user_command = 'ag %s --nocolor --hidden -g ""'
+  let g:ctrlp_user_command = 'ag %s --nocolor --ignore ".git/*" --hidden -g ""'
   let g:ackprg = 'ag --vimgrep'
 endif
 
