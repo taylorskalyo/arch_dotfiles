@@ -1,4 +1,4 @@
 # Arch Dotfiles
 My personal dotfiles and scripts for Arch Linux
 
-![2016-10-07-203458_1600x900_scrot](https://cloud.githubusercontent.com/assets/2508427/19208852/e3a73fac-8ccd-11e6-86b0-682337487d66.png)
+![2017-02-17-204921_1600x900_scrot](https://cloud.githubusercontent.com/assets/2508427/23089168/d4490570-f552-11e6-8394-c7fa8685b939.png)
