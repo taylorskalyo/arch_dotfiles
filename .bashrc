@@ -1,6 +1,6 @@
 # Source shared shell resources
-if [[ -d "${HOME}/.shell.d" ]]; then
-  for file in "${HOME}"/.shell.d/*; do
+if [[ -d "${XDG_CONFIG_HOME:=$HOME/.config}/shell" ]]; then
+  for file in "${XDG_CONFIG_HOME}"/shell/*; do
     [[ -r "${file}" ]] && source "${file}"
   done
 fi

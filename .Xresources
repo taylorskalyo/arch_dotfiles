@@ -1,4 +1,4 @@
-#include ".Xresources.d/colors"
+#include ".config/xresources/colors"
 #define font01 xft:Meslo LG M:pixelsize=10
 #define font02 xft:Deja Vu Sans:pixelsize=11
 
