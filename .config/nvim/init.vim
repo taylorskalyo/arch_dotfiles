@@ -25,6 +25,9 @@ elseif executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
 
+" Let shellcheck look at external sources
+let g:syntastic_sh_shellcheck_args = "--external-sources"
+
 " Use the system clipboard if not using tmux
 if $TMUX == ''
   set clipboard+=unnamed
