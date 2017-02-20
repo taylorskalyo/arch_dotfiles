@@ -5,9 +5,13 @@ lock_cmd() {
   local bgarg bgimg="${CONFIG_DIR}/lock.png"
   [[ -e "${bgimg}" ]] && bgarg="--image=${bgimg}" || bgarg="--color=000000"
 
+  # Lock the screen
   i3lock \
     --ignore-empty-password \
     --nofork \
     --no-unlock-indicator \
     "${bgarg}"
+
+  # Reload bg
+  "${HOME}/.fehbg"
 }
