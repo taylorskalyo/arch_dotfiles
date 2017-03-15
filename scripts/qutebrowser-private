@@ -3,10 +3,12 @@
 # Wrapper around qutebrowser to launch a private browsing session
 
 main() {
-
   local qutedir tempdir file ddgparams
   qutedir="${XDG_CONFIG_HOME:-${HOME}/.config}/qutebrowser"
   tempdir=$(mktemp -d)
+
+  # Cleanup
+  trap "rm -rf $tempdir; exit" EXIT
 
   # Copy current config files to temporary config directory
   mkdir -p "${tempdir}/config"
@@ -30,9 +32,6 @@ main() {
     --set general default-page "https://duckduckgo.com?${ddgparams}" \
     --set colors statusbar.bg "\${tabs.bg.selected.odd}" \
     "$@"
-
-  # Cleanup
-  rm -rf "${tempdir}"
 }
 
 main "$@"
