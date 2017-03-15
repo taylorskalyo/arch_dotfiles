@@ -118,7 +118,7 @@ call <sid>hi("StorageClass", s:base0A, "", "")
 call <sid>hi("String",       s:base0B, "", "")
 call <sid>hi("Structure",    s:base0E, "", "")
 call <sid>hi("Tag",          s:base0A, "", "")
-call <sid>hi("Todo",         s:base01, s:base0A, "")
+call <sid>hi("Todo",         s:base01, s:base03, "")
 call <sid>hi("Type",         s:base0D, "", "none")
 call <sid>hi("Typedef",      s:base0A, "", "")
 
