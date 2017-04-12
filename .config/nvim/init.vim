@@ -7,12 +7,13 @@ if empty(glob('~/.config/nvim/autoload/plug.vim'))
 endif
 
 call plug#begin()
-Plug 'kien/ctrlp.vim', { 'on':  ['CtrlP', 'CtrlPBuffer'] }
-Plug 'mileszs/ack.vim', { 'on':  'Ack' }
+Plug 'kien/ctrlp.vim',      { 'on': ['CtrlP', 'CtrlPBuffer'] }
+Plug 'mileszs/ack.vim',     { 'on': 'Ack' }
 Plug 'tpope/vim-fugitive'
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-Plug 'scrooloose/syntastic'
-Plug 'majutsushi/tagbar', { 'on':  'TagbarToggle' }
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'w0rp/ale',
+Plug 'majutsushi/tagbar',   { 'on': 'TagbarToggle' }
+Plug 'godlygeek/tabular',   { 'on': 'Tabularize' }
 Plug 'fatih/vim-go'
 call plug#end()
 
@@ -25,11 +26,14 @@ elseif executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
 
-" Let shellcheck look at external sources
-let g:syntastic_sh_shellcheck_args = "--external-sources"
+" Only lint in normal mode
+let g:ale_lint_on_insert_leave = 1
+let g:ale_lint_on_text_changed = 'normal'
+
+let g:ale_linters_sh_shellcheck_exclusions = 'SC1090,SC1091'
 
 " Use the system clipboard if not using tmux
-if $TMUX == ''
+if $TMUX ==? ''
   set clipboard+=unnamed
 endif
 
@@ -91,6 +95,22 @@ set splitright
 set fillchars=vert:│
 
 " -----------------
+" Functions and shortcuts
+" -------------------------------------------------------------
+" Move cursor by display line (rather than physical line)
+nnoremap k gk
+nnoremap j gj
+nnoremap <Up> g<Up>
+nnoremap <Down> g<Down>
+
+" Toggle search highlighting
+nnoremap <leader>h :set hlsearch! hlsearch?<CR>
+
+" Easier buffer switching (mimics tab switching)
+nnoremap gb :bn<CR>
+nnoremap gB :bp<CR>
+
+" -----------------
 " Miscellaneous
 " -------------------------------------------------------------
 " Unicode support
@@ -111,8 +131,8 @@ set lazyredraw
 " Move temporary files to tmp directory
 set backupdir-=.
 set backupdir+=/tmp
-set dir-=.
-set dir+=/tmp
+set directory-=.
+set directory+=/tmp
 
 " Automatically read when file changes outside of vim
 set autoread
@@ -120,18 +140,10 @@ set autoread
 " Allow modified buffers to be hidden
 set hidden
 
-" -----------------
-" Functions and shortcuts
-" -------------------------------------------------------------
-" Move cursor by display line (rather than physical line)
-nnoremap k gk
-nnoremap j gj
-nnoremap <Up> g<Up>
-nnoremap <Down> g<Down>
+" Per-project .nvimrc
+set exrc
 
-" Toggle search highlighting
-nnoremap <leader>h :set hlsearch! hlsearch?<CR>
+" Don't run unsafe autocmds in per-project .nvimrc files
+set secure
 
-" Easier buffer switching (mimics tab switching)
-nnoremap gb :bn<CR>
-nnoremap gB :bp<CR>
+scriptencoding iso-8859-5
