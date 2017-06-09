@@ -7,14 +7,17 @@ if empty(glob('~/.config/nvim/autoload/plug.vim'))
 endif
 
 call plug#begin()
-Plug 'kien/ctrlp.vim',      { 'on': ['CtrlP', 'CtrlPBuffer'] }
-Plug 'mileszs/ack.vim',     { 'on': 'Ack' }
+Plug 'ctrlpvim/ctrlp.vim',     { 'on': ['CtrlP', 'CtrlPBuffer'] }
+Plug 'mileszs/ack.vim',        { 'on': 'Ack' }
 Plug 'tpope/vim-fugitive'
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'scrooloose/nerdtree',    { 'on': 'NERDTreeToggle' }
 Plug 'w0rp/ale',
-Plug 'majutsushi/tagbar',   { 'on': 'TagbarToggle' }
-Plug 'godlygeek/tabular',   { 'on': 'Tabularize' }
-Plug 'fatih/vim-go'
+Plug 'majutsushi/tagbar',      { 'on': 'TagbarToggle' }
+Plug 'godlygeek/tabular',      { 'on': 'Tabularize' }
+Plug 'fatih/vim-go',           { 'for': 'go' }
+Plug 'unblevable/quick-scope'
+Plug 'junegunn/goyo.vim',      { 'on' : 'Goyo'}
+Plug 'junegunn/limelight.vim', { 'on' : 'Limelight' }
 call plug#end()
 
 " Use rg/ag for searching
@@ -26,11 +29,18 @@ elseif executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
 
+" Only highlight quick-scope targets on character motions
+let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+
 " Only lint in normal mode
 let g:ale_lint_on_insert_leave = 1
 let g:ale_lint_on_text_changed = 'normal'
 
 let g:ale_linters_sh_shellcheck_exclusions = 'SC1090,SC1091'
+
+" Start/Stop Limelight with Goyo
+autocmd! User GoyoEnter Limelight
+autocmd! User GoyoLeave Limelight!
 
 " Use the system clipboard if not using tmux
 if $TMUX ==? ''
