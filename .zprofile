@@ -8,6 +8,8 @@ for EDITOR in "nvim" "vim" "vi"; do
     break
   fi
 done
+SUDO_EDITOR="${EDITOR}"
+export SUDO_EDITOR
 
 # Default browser
 for BROWSER in "qutebrowser" "firefox"; do
