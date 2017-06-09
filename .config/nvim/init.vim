@@ -32,6 +32,14 @@ endif
 " Only highlight quick-scope targets on character motions
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
+" Highlight markdown code blocks
+let g:markdown_fenced_languages = [
+      \ 'ruby',
+      \ 'go',
+      \ 'sh', 'bash=sh', 'shell=sh',
+      \ 'javascript', 'js=javascript', 'json'
+      \]
+
 " Only lint in normal mode
 let g:ale_lint_on_insert_leave = 1
 let g:ale_lint_on_text_changed = 'normal'
