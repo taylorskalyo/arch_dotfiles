@@ -61,9 +61,6 @@ nnoremap <leader>t :TagbarToggle<CR>
 " Toggle NerdTree
 nnoremap <leader>n :NERDTreeToggle<CR>
 
-" Ctrlp buffer selection
-nnoremap <C-b> :CtrlPBuffer<CR>
-
 " Because we're lazy-loading CtrlP, we need to manually set up this mapping
 nnoremap <C-p> :CtrlP<CR>
 
