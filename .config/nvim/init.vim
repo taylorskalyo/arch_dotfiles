@@ -73,6 +73,9 @@ set number
 " Wrap lines
 set wrap
 
+" Wrap at word boundaries
+set linebreak
+
 " Syntax highlighting
 syntax enable
 
@@ -108,6 +111,9 @@ set colorcolumn=80
 set splitbelow
 set splitright
 set fillchars=vert:│
+
+" Disable GUI cursor
+set guicursor=
 
 " -----------------
 " Functions and shortcuts
